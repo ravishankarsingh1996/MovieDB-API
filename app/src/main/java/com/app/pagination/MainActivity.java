@@ -2,6 +2,7 @@ package com.app.pagination;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean loading = true;
     LinearLayoutManager mLayoutManager;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-    Integer page=1, pagination = 0;
-
+    Integer page = 1, pagination = 0;
+    Integer result = 0;
+    SwipeRefreshLayout swipeRefreshLayout;
     Movie movie;
 
     @Override
@@ -46,31 +48,35 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_main_activity);
         progressBarMainContentLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity);
         progressBarPaginationLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity_pagination);
         progressBarMainContentLoading.setVisibility(View.VISIBLE);
         new GetJSONData().execute();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if(dy > 0)
-                {
+            public void onRefresh() {
+                page = 1;
+                pagination = 0;
+                new GetJSONData().execute();
+            }
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
                     visibleItemCount = mLayoutManager.getChildCount();
                     totalItemCount = mLayoutManager.getItemCount();
                     pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
                     Log.v("...", "Loggggg");
 
-                    if (loading)
-                    {
-                        if ( (visibleItemCount + pastVisiblesItems) == totalItemCount)
-                        {
+                    if (loading) {
+                        if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
                             //loading = false;
                             Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
                             //TODO pagination &  fetch new data
                             progressBarPaginationLoading.setVisibility(View.VISIBLE);
-                            page=page+1;
+                            page = page + 1;
                             pagination = 1;
                             new GetJSONData().execute();
                         }
@@ -86,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(Void... voids) {
             String urlLink = "http://api.themoviedb.org/3/discover/movie?" +
-                    "api_key=2c0bb3ae2ba96a469724d0c25bd4844e&page="+page;
+                    "api_key=2c0bb3ae2ba96a469724d0c25bd4844e&page=" + page;
             HttpURLConnection httpsURLConnection;
-            Integer result = 0;
+            result = 0;
 
             try {
                 URL url = new URL(urlLink);
@@ -123,19 +129,20 @@ public class MainActivity extends AppCompatActivity {
             if (integer == 1 && pagination == 0) {
                 movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
-               // movieAdapter.notifyDataSetChanged();
+                // movieAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(movieAdapter);
                 //movieAdapter.notifyItemInserted(totalItemCount);
                 progressBarMainContentLoading.setVisibility(View.INVISIBLE);
                 progressBarPaginationLoading.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
 
-            } else if (integer == 1 && pagination == 1){
+            } else if (integer == 1 && pagination == 1) {
                 //commented below line to avoid the data reload and view from start every time
                 // and create a new instance of MovieAdapter
                 //movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
                 recyclerView.swapAdapter(movieAdapter, false);
-               // movieAdapter.notifyItemInserted(totalItemCount);
+                // movieAdapter.notifyItemInserted(totalItemCount);
                 progressBarMainContentLoading.setVisibility(View.INVISIBLE);
                 progressBarPaginationLoading.setVisibility(View.GONE);
             } else
@@ -148,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 JSONArray jsonArray = jsonObject.optJSONArray("results");
-                //movieList = new ArrayList<>();
+               //if ( pagination == 1)
+                // movieList = new ArrayList<>();
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject post = jsonArray.getJSONObject(i);
@@ -168,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
     private class GetSecondJSONData extends AsyncTask<Void, Void, Integer> {
 
         @Override
@@ -210,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
             if (integer == 1) {
                 movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
-               // movieAdapter.notifyDataSetChanged();
+                // movieAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(movieAdapter);
                 progressBarMainContentLoading.setVisibility(View.INVISIBLE);
                 progressBarPaginationLoading.setVisibility(View.GONE);
-            }  else
+            } else
                 Toast.makeText(MainActivity.this, "Failed to load JSON data",
                         Toast.LENGTH_LONG).show();
         }
