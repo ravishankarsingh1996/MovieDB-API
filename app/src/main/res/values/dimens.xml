@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_layout_margin">2dp</dimen>
+    <dimen name="card_layout_corner_dimens">5dp</dimen>
+    <dimen name="linear_layout_card_view">2dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="movie_name_text_size">18dp</dimen>
+</resources>
