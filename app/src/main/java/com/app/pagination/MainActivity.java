@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray jsonArray = jsonObject.optJSONArray("results");
                //if ( pagination == 1)
                 // movieList = new ArrayList<>();
-
+                    String genres = "";
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject post = jsonArray.getJSONObject(i);
                     movie = new Movie();
@@ -166,6 +166,12 @@ public class MainActivity extends AppCompatActivity {
                     movie.setmStringMovieDescription(post.optString("overview"));
                     movie.setmStringMovieReleaseDate(post.optString("release_date"));
                     movie.setmStringMoviePicURL(post.optString("poster_path"));
+                    movie.setmStringMovieRating(post.optString("vote_average"));
+                    JSONArray genresArray = post.getJSONArray("genre_ids");
+                    for (int j = 0 ; j < genresArray.length(); j++){
+                         genres = genres + genresArray.optString(i);
+                    }
+                    movie.setmStringMovieGenres(genres);
                     movie.setmStringMovieID(post.optString("id"));
                     movieList.add(movie);
                 }
@@ -178,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class GetSecondJSONData extends AsyncTask<Void, Void, Integer> {
+   /* private class GetSecondJSONData extends AsyncTask<Void, Void, Integer> {
 
         @Override
         protected Integer doInBackground(Void... voids) {
@@ -253,5 +259,5 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 }

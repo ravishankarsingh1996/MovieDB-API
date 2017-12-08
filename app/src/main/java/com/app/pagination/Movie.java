@@ -11,6 +11,8 @@ public class Movie {
     private String mStringMoviePicURL;
     private String mStringMovieDescription;
     private String mStringMovieID;
+    private String mStringMovieRating;
+    private String mStringMovieGenres;
 
     public Movie(){
 
@@ -63,5 +65,21 @@ public class Movie {
 
     public void setmStringMovieID(String mStringMovieID) {
         this.mStringMovieID = mStringMovieID;
+    }
+
+    public String getmStringMovieRating() {
+        return mStringMovieRating;
+    }
+
+    public void setmStringMovieRating(String mStringMovieRating) {
+        this.mStringMovieRating = mStringMovieRating;
+    }
+
+    public String getmStringMovieGenres() {
+        return mStringMovieGenres;
+    }
+
+    public void setmStringMovieGenres(String mStringMovieGenres) {
+        this.mStringMovieGenres = mStringMovieGenres;
     }
 }

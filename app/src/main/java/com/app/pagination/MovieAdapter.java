@@ -38,6 +38,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = movieList.get(position);
         holder.textViewMovieName.setText(movie.getmStringMovieName());
+        holder.textViewMovieRating.setText(movie.getmStringMovieRating());
+        holder.textViewMovieGenres.setText(movie.getmStringMovieGenres());
+        holder.textViewMovieDescription.setText(movie.getmStringMovieDescription());
         holder.textViewMovieReleaseDate.setText(movie.getmStringMovieReleaseDate());
         Picasso.with(context)
                 .load("https://image.tmdb.org/t/p/w500/" + movie.getmStringMoviePicURL())
@@ -51,13 +54,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewMovieName, textViewMovieReleaseDate;
+        TextView textViewMovieName, textViewMovieReleaseDate, textViewMovieRating, textViewMovieGenres, textViewMovieDescription;
         ImageView imageViewMoviePic;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             textViewMovieName = itemView.findViewById(R.id.textView_movie_name);
             textViewMovieReleaseDate = itemView.findViewById(R.id.textView_movie_release_date);
+            textViewMovieRating = itemView.findViewById(R.id.textView_movie_rating);
+            textViewMovieGenres = itemView.findViewById(R.id.textView_movie_genres);
+            textViewMovieDescription = itemView.findViewById(R.id.textView_movie_description);
             imageViewMoviePic = itemView.findViewById(R.id.imageView_movie_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
