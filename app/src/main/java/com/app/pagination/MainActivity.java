@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                 progressBarPaginationLoading.setVisibility(View.GONE);
 
             } else if (integer == 1 && pagination == 1){
+                //commented below line to avoid the data reload and view from start every time
+                // and create a new instance of MovieAdapter
                 //movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
                 recyclerView.swapAdapter(movieAdapter, false);
