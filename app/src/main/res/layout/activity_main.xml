@@ -20,4 +20,12 @@
         android:layout_centerInParent="true"
         android:id="@+id/progressBar_main_activity"/>
 
+    <ProgressBar
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/progressBar_main_activity_pagination"/>
+
 </RelativeLayout>
