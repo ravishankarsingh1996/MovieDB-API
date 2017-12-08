@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean loading = true;
     LinearLayoutManager mLayoutManager;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-    Integer page=1;
-    Integer result = 0;
+    Integer page=1, pagination = 0;
+
     Movie movie;
 
     @Override
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                             //TODO pagination &  fetch new data
                             progressBarPaginationLoading.setVisibility(View.VISIBLE);
                             page=page+1;
-                            result=2;
+                            pagination = 1;
                             new GetJSONData().execute();
                         }
                     }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             String urlLink = "http://api.themoviedb.org/3/discover/movie?" +
                     "api_key=2c0bb3ae2ba96a469724d0c25bd4844e&page="+page;
             HttpURLConnection httpsURLConnection;
-
+            Integer result = 0;
 
             try {
                 URL url = new URL(urlLink);
@@ -120,17 +120,20 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer integer) {
 
-            if (integer == 1) {
+            if (integer == 1 && pagination == 0) {
                 movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
-                movieAdapter.notifyDataSetChanged();
+               // movieAdapter.notifyDataSetChanged();
                 recyclerView.setAdapter(movieAdapter);
+                //movieAdapter.notifyItemInserted(totalItemCount);
                 progressBarMainContentLoading.setVisibility(View.INVISIBLE);
+                progressBarPaginationLoading.setVisibility(View.GONE);
 
-            } else if (integer == 2){
-                movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
+            } else if (integer == 1 && pagination == 1){
+                //movieAdapter = new MovieAdapter(getApplicationContext(), movieList);
                 recyclerView.setItemAnimator(new SlideInUpAnimator());
                 recyclerView.swapAdapter(movieAdapter, false);
+               // movieAdapter.notifyItemInserted(totalItemCount);
                 progressBarMainContentLoading.setVisibility(View.INVISIBLE);
                 progressBarPaginationLoading.setVisibility(View.GONE);
             } else
