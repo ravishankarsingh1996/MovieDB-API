@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 page = 1;
                 pagination = 0;
+                movieList = new ArrayList<>();
                 new GetJSONData().execute();
             }
         });
