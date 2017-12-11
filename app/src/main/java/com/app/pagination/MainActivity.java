@@ -1,5 +1,7 @@
 package com.app.pagination;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,9 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.app.pagination.utils.ConnectionChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     Integer result = 0;
     SwipeRefreshLayout swipeRefreshLayout;
     Movie movie;
+    private boolean mNetworkStateCheck;
+    LinearLayout linearLayout;
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,43 +59,76 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        ConnectionChecker cc = new ConnectionChecker();
+        mNetworkStateCheck = cc.checkInternetConenction(connectivityManager);
+        linearLayout = (LinearLayout) findViewById(R.id.linear_layout_connection_error);
+        relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_main_activity);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_main_activity);
         progressBarMainContentLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity);
         progressBarPaginationLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity_pagination);
         progressBarMainContentLoading.setVisibility(View.VISIBLE);
-        new GetJSONData().execute();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 1;
-                pagination = 0;
-                movieList = new ArrayList<>();
-                new GetJSONData().execute();
+                if (mNetworkStateCheck) {
+                    page = 1;
+                    pagination = 0;
+                    movieList = new ArrayList<>();
+                    new GetJSONData().execute();
+                } else
+                    showCustomToastAlert();
+
             }
         });
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0) {
-                    visibleItemCount = mLayoutManager.getChildCount();
-                    totalItemCount = mLayoutManager.getItemCount();
-                    pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
-                    Log.v("...", "Loggggg");
+        if (mNetworkStateCheck) {
+            new GetJSONData().execute();
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (dy > 0) {
+                        visibleItemCount = mLayoutManager.getChildCount();
+                        totalItemCount = mLayoutManager.getItemCount();
+                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                        Log.v("...", "Loggggg");
 
-                    if (loading) {
-                        if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
-                            //loading = false;
-                            Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
-                            //TODO pagination &  fetch new data
-                            progressBarPaginationLoading.setVisibility(View.VISIBLE);
-                            page = page + 1;
-                            pagination = 1;
-                            new GetJSONData().execute();
+                        if (loading) {
+                            if ((visibleItemCount + pastVisiblesItems) == totalItemCount) {
+                                //loading = false;
+                                Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
+                                //TODO pagination &  fetch new data
+                                progressBarPaginationLoading.setVisibility(View.VISIBLE);
+                                if (mNetworkStateCheck) {
+                                    page = page + 1;
+                                    pagination = 1;
+                                    new GetJSONData().execute();
+                                } else
+                                    showCustomToastAlert();
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
+        else {
+            showCustomToastAlert();
+            linearLayout.setVisibility(View.VISIBLE);
+            //progressBarMainContentLoading.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void showCustomToastAlert()
+    {
+
+        Context context = getApplicationContext();
+        LayoutInflater inflater = getLayoutInflater();
+        View toastRoot = inflater.inflate(R.layout.toast_for_connection_error, null);
+        Toast toast = new Toast(context);
+        toast.setView(toastRoot);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+                0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
     }
 
 
