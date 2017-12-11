@@ -1,4 +1,4 @@
-package com.app.pagination;
+package com.app.pagination.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.pagination.R;
 import com.squareup.picasso.Picasso;
 
 /**

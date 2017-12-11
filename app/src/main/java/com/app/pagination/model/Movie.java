@@ -1,4 +1,4 @@
-package com.app.pagination;
+package com.app.pagination.model;
 
 /**
  * Created by Ravi on 07-12-2017.

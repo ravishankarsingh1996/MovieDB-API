@@ -1,4 +1,4 @@
-package com.app.pagination;
+package com.app.pagination.activity;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,11 +12,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.app.pagination.R;
+import com.app.pagination.model.Movie;
 import com.app.pagination.utils.ConnectionChecker;
 
 import org.json.JSONArray;
@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     Movie movie;
     private boolean mNetworkStateCheck;
-    LinearLayout linearLayout;
-    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         ConnectionChecker cc = new ConnectionChecker();
         mNetworkStateCheck = cc.checkInternetConenction(connectivityManager);
-        linearLayout = (LinearLayout) findViewById(R.id.linear_layout_connection_error);
-        relativeLayout = (RelativeLayout) findViewById(R.id.relative_layout_main_activity);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout_main_activity);
         progressBarMainContentLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity);
         progressBarPaginationLoading = (ProgressBar) findViewById(R.id.progressBar_main_activity_pagination);
@@ -112,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             showCustomToastAlert();
-            linearLayout.setVisibility(View.VISIBLE);
             //progressBarMainContentLoading.setVisibility(View.INVISIBLE);
         }
     }
