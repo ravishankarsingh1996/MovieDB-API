@@ -247,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
                     movie.setmStringMovieReleaseDate(post.optString("release_date"));
                     movie.setmStringMoviePicURL(post.optString("poster_path"));
                     movie.setmStringMovieRating(post.optString("vote_average"));
+                    movie.setmStringMovieID(post.optString("id"));
+                    movie.setmStringMovieBackgroundImagePath(post.optString("backdrop_path"));
                     JSONArray genresArray = post.getJSONArray("genre_ids");
                     //TODO check for multiple asssignments in genre value on swipe refresh
                    // movie.setmStringMovieGenres("Horror");
@@ -278,7 +280,6 @@ public class MainActivity extends AppCompatActivity {
                     //mStringGenres = mStringGenres.substring(0, mStringGenres.length() - 1);
                     movie.setmStringMovieGenres(mStringGenres);
 
-                    //movie.setmStringMovieID(post.optString("id"));
                     movieList.add(movie);
                 }
             } catch (JSONException e) {

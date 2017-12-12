@@ -13,6 +13,7 @@ public class Movie {
     private String mStringMovieID;
     private String mStringMovieRating;
     private String mStringMovieGenres;
+    private String mStringMovieBackgroundImagePath;
 
     public Movie(){
 
@@ -81,5 +82,13 @@ public class Movie {
 
     public void setmStringMovieGenres(String mStringMovieGenres) {
         this.mStringMovieGenres = mStringMovieGenres;
+    }
+
+    public String getmStringMovieBackgroundImagePath() {
+        return mStringMovieBackgroundImagePath;
+    }
+
+    public void setmStringMovieBackgroundImagePath(String mStringMovieBackgroundImagePath) {
+        this.mStringMovieBackgroundImagePath = mStringMovieBackgroundImagePath;
     }
 }

@@ -1,45 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:id="@+id/dTextView_movie_name"
-        android:textStyle="bold|italic"
-        android:textSize="18dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"
-        android:gravity="center_horizontal"/>
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dimageView_movie_description_image"
-        android:layout_marginTop="@dimen/margin_2dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="@dimen/margin_2dp"
-        android:layout_marginLeft="@dimen/margin_2dp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:textSize="16dp"
-        android:textColor="@color/colorAccent"
-        android:layout_marginHorizontal="10dp"
-        android:id="@+id/dTextView_movie_release_date"
-        android:gravity="center_horizontal"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="2dp"
-        android:textSize="14dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/dTextView_movie_description"
-        android:gravity="center_horizontal"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:alpha="0.3"
+        android:id="@+id/image_view_description_activity"
+        />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/dTextView_movie_name"
+                    android:layout_width="match_parent"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:text="Movie Name Loading ....."
+                    android:textColor="#000000"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:id="@+id/dimageView_movie_description_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/dTextView_movie_release_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/dTextView_movie_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</FrameLayout>

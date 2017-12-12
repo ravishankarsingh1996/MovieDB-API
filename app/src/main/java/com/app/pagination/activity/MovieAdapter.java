@@ -95,6 +95,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                                 clickedMovieItem.getmStringMoviePicURL());
                         intent.putExtra("description_movie",
                                 clickedMovieItem.getmStringMovieDescription());
+                        intent.putExtra("backdrop_path", clickedMovieItem.getmStringMovieBackgroundImagePath());
                         context.startActivity(intent);
                     }
                 }
