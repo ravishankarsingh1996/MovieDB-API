@@ -27,8 +27,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
-    List<Movie> movieList;
-    Context context;
+    private List<Movie> movieList;
+    private Context context;
 
 
     MovieAdapter(Context context, List<Movie> movieList) {
@@ -95,7 +95,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
                                 clickedMovieItem.getmStringMoviePicURL());
                         intent.putExtra("description_movie",
                                 clickedMovieItem.getmStringMovieDescription());
-                        intent.putExtra("backdrop_path", clickedMovieItem.getmStringMovieBackgroundImagePath());
+                        intent.putExtra("rating_movie",
+                                clickedMovieItem.getmStringMovieRating());
+                        intent.putExtra("backdrop_path",
+                                clickedMovieItem.getmStringMovieBackgroundImagePath());
                         context.startActivity(intent);
                     }
                 }

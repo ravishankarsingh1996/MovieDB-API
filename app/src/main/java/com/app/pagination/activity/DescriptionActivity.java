@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.pagination.R;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -25,8 +26,8 @@ public class DescriptionActivity extends AppCompatActivity {
 
     TextView mTextViewMovieName, mTextViewMovieReleaseDate, mTextViewMovieDescription;
     ImageView mImageViewMoviePic, mImageViewMovieBackgroundPic;
-
-    String movieName, movieReleaseDate, movieDescription, moviePicUrl, movieBackgroundPicUrl;
+    DonutProgress donutProgressMovieRating;
+    String movieName, movieReleaseDate, movieDescription, moviePicUrl, movieBackgroundPicUrl, movieRating;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class DescriptionActivity extends AppCompatActivity {
         mTextViewMovieDescription = (TextView) findViewById(R.id.dTextView_movie_description);
         mImageViewMoviePic = (ImageView) findViewById(R.id.dimageView_movie_description_image);
         mImageViewMovieBackgroundPic = (ImageView) findViewById(R.id.image_view_description_activity);
+        donutProgressMovieRating = (DonutProgress) findViewById(R.id.donut_progress_movie_rating);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if(!bundle.isEmpty()){
@@ -43,16 +45,18 @@ public class DescriptionActivity extends AppCompatActivity {
             movieReleaseDate = bundle.getString("release_date_movie");
             movieDescription = bundle.getString("description_movie");
             moviePicUrl = bundle.getString("picurl_movie");
+            movieRating = bundle.getString("rating_movie");
             movieBackgroundPicUrl = bundle.getString("backdrop_path");
             mTextViewMovieName.setText(movieName);
-            mTextViewMovieReleaseDate.setText(movieReleaseDate);
+            mTextViewMovieReleaseDate.setText("Release Date : "  + movieReleaseDate);
             mTextViewMovieDescription.setText(movieDescription);
+            donutProgressMovieRating.setProgress((Float.parseFloat(movieRating)*10));
             Picasso.with(getApplicationContext())
                     .load("https://image.tmdb.org/t/p/w500/" + movieBackgroundPicUrl)
+                    .fit()
                     .into(mImageViewMoviePic);
             Picasso.with(getApplicationContext())
-                    .load("https://image.tmdb.org/t/p/w500/" + moviePicUrl)
-                   // .fit()
+                    .load("https://image.tmdb.org/t/p/w300/" + moviePicUrl)
                     .centerCrop()
                     .resize(250,500)
                     .into(new Target() {
@@ -78,6 +82,7 @@ public class DescriptionActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
 
     }
+
     public void getBitmapColor(Bitmap bitmap){
 
         Palette.from(bitmap)

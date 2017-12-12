@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         if (loading) {
                             if ((visibleItemCount + pastVisibleItems) == totalItemCount) {
                                 //loading = false;
-                                Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(MainActivity.this, "Last", Toast.LENGTH_LONG).show();
                                 //TODO pagination &  fetch new data
                                 progressBarPaginationLoading.setVisibility(View.VISIBLE);
                                 if (mNetworkStateCheck) {

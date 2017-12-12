@@ -107,8 +107,10 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, SPLASH_TIME);*/
                 finish();
-            } else
+            } else {
                 Toast.makeText(context, "Check Your Network Connection", Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
         }
 

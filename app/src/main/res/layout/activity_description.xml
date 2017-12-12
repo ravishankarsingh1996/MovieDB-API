@@ -1,49 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/image_view_description_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="10dp"
         android:alpha="0.3"
-        android:id="@+id/image_view_description_activity"
-        />
+        android:elevation="10dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/dimageView_movie_description_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/dTextView_movie_name"
-                    android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:textAlignment="center"
-                    android:text="Movie Name Loading ....."
-                    android:textColor="#000000"
-                    android:layout_height="wrap_content" />
-
-                <ImageView
-                    android:id="@+id/dimageView_movie_description_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>
@@ -51,17 +36,130 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:elevation="15dp"
             android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView
-                android:id="@+id/dTextView_movie_release_date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/dTextView_movie_description"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:weightSum="5">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1">
+
+                    <com.github.lzyzsd.circleprogress.DonutProgress
+                        android:id="@+id/donut_progress_movie_rating"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        app:donut_background_color="#000000"
+                        app:donut_finished_color="#00E676"
+                        app:donut_unfinished_color="#1B5E20"
+                        app:donut_text_color="#ffffff"
+                        app:donut_text_size="10dp"
+                        app:donut_max="100" />
+                    </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textColor="#000000"
+                    android:text="@string/rating_string"
+                    android:gravity="center"
+                    android:textSize="15dp"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circlebackground"
+                    android:src="@drawable/ic_view_headline_white_18dp"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circlebackground"
+                    android:src="@drawable/ic_favorite_white_18dp"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circlebackground"
+                    android:src="@drawable/ic_turned_in_white_18dp"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circlebackground"
+                    android:src="@drawable/ic_star_white_18dp"
+                    android:padding="10dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dTextView_movie_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Movie Name Loading ....."
+                    android:textAlignment="center"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:textColor="#000000"
+                    android:textSize="50dp" />
+
+                <TextView
+                    android:id="@+id/dTextView_movie_release_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:layout_margin="5dp"
+                    android:textColor="#000000" />
+
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/dTextView_movie_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:textSize="12dp"
+                        android:textColor="#000000" />
+                </ScrollView>
+            </LinearLayout>
         </LinearLayout>
 
 
