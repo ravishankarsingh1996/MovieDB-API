@@ -62,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected Integer doInBackground(Void... voids) {
 
-            String urlToGetGenres = "https://api.themoviedb.org/3/genre/movie/list?api_key=2c0bb3ae2ba96a469724d0c25bd4844e&language=en-US";
+            String urlToGetGenres = "https://api.themoviedb.org/3/genre/movie/list?api_key=2c0bb3ae2ba96a469724d0c25bd4844e";
             HttpURLConnection httpURLConnection;
             Integer result = 0;
 

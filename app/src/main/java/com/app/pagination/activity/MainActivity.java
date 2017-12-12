@@ -258,17 +258,17 @@ public class MainActivity extends AppCompatActivity {
                                 Genre genre = genresList.get(k);
 
                                 if(j == genresArray.length()-1){
-                                if (genresArray.optString(j) == genre.getmStringGenreId()) {
+                                if (genresArray.optString(j).equals(genre.getmStringGenreId())) {
                                     mStringGenres = mStringGenres + genre.getmStringGenreName() ;
                                     Log.d("Genre2", genresArray.optString(j));
                                 }
-                                } /*else {
-                                    if (genresArray.optString(j) == genre.getmStringGenreId()) {
+                                } else {
+                                    if (genresArray.optString(j).equals(genre.getmStringGenreId())) {
                                         mStringGenres = mStringGenres + genre.getmStringGenreName()+ ",";
                                         Log.d("Genre", genresArray.optString(j) );
 
                                     }
-                                }*/
+                                }
                                 Log.d("K", ""+k );
                             }
                         Log.d("Genre", mStringGenres);
