@@ -2,6 +2,7 @@ package com.app.pagination.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.pagination.R;
+import com.app.pagination.model.Genre;
 import com.app.pagination.model.Movie;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Ravi on 07-12-2017.
@@ -24,7 +31,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     Context context;
 
 
-    public MovieAdapter(Context context, List<Movie> movieList) {
+    MovieAdapter(Context context, List<Movie> movieList) {
         this.context = context;
         this.movieList = movieList;
     }
@@ -56,11 +63,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movieList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewMovieName, textViewMovieReleaseDate, textViewMovieRating, textViewMovieGenres, textViewMovieDescription;
         ImageView imageViewMoviePic;
 
-        public ViewHolder(final View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             textViewMovieName = itemView.findViewById(R.id.textView_movie_name);
             textViewMovieReleaseDate = itemView.findViewById(R.id.textView_movie_release_date);

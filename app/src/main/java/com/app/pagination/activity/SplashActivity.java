@@ -2,6 +2,7 @@ package com.app.pagination.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,11 +21,14 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Ravi on 07-12-2017.
@@ -33,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
     List genreList = new ArrayList<>();
     int statusCode;
     Context context;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,28 +56,28 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_TIME);*/
     }
 
-    public class GetMovieGenresData extends AsyncTask<Void, Void, Integer>{
-
+    public class GetMovieGenresData extends AsyncTask<Void, Void, Integer> {
+        String genreJSONObject;
 
         @Override
         protected Integer doInBackground(Void... voids) {
 
-            String urlToGetGenres ="https://api.themoviedb.org/3/genre/movie/list?api_key=2c0bb3ae2ba96a469724d0c25bd4844e&language=en-US";
+            String urlToGetGenres = "https://api.themoviedb.org/3/genre/movie/list?api_key=2c0bb3ae2ba96a469724d0c25bd4844e&language=en-US";
             HttpURLConnection httpURLConnection;
             Integer result = 0;
 
-            try{
+            try {
                 URL url = new URL(urlToGetGenres);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 statusCode = httpURLConnection.getResponseCode();
-                if (statusCode == 200){
+                if (statusCode == 200) {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                     StringBuilder stringBuilder = new StringBuilder();
                     String line;
-                    while((line = bufferedReader.readLine()) !=null){
+                    while ((line = bufferedReader.readLine()) != null) {
                         stringBuilder.append(line);
                     }
-                     ParseJSONData(stringBuilder.toString());
+                        genreJSONObject = stringBuilder.toString();
                     result = 1;
                 } else {
                     result = 0;
@@ -88,37 +93,28 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
-            if(statusCode == 200){
-            Intent intentLaunchLoginActivity = new Intent(
-                    context, MainActivity.class);
-            startActivity(intentLaunchLoginActivity);
-            finish();}
-            else
-                Toast.makeText(context, "Check Your Network Connection",Toast.LENGTH_SHORT).show();
+            Log.d("POST_EXECUTE", "Post execute running");
+            if (statusCode == 200) {
+                Intent intentLaunchLoginActivity = new Intent(
+                        context, MainActivity.class);
+                intentLaunchLoginActivity.putExtra("GENRES_JSON_OBJECT", genreJSONObject);
+                startActivity(intentLaunchLoginActivity);
+       /*      int SPLASH_TIME = 1500;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                    finish();
+            }
+        }, SPLASH_TIME);*/
+                finish();
+            } else
+                Toast.makeText(context, "Check Your Network Connection", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-        }
-
-        private void ParseJSONData(String s){
-
-            try{
-                JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray = jsonObject.optJSONArray("genres");
-
-                for (int i = 0; i<jsonArray.length(); i++){
-                    JSONObject jsonObjectGenre = jsonArray.getJSONObject(i);
-                        Genre genre = new Genre();
-                        genre.setmStringGenreId(jsonObjectGenre.optString("id"));
-                        genre.setmStringGenreName(jsonObjectGenre.optString("name"));
-                        genreList.add(genre);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

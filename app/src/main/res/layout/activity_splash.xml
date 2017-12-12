@@ -10,15 +10,15 @@
         android:layout_centerInParent="true"
         android:background="@drawable/ic_splash_logo"
         android:foregroundGravity="center" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movie Time"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
+        android:text="Movie Time"
+        android:textColor="@color/splash"
         android:textSize="50dp"
-        android:textColor="@color/splash"/>
-
+        android:textStyle="bold" />
 </RelativeLayout>
