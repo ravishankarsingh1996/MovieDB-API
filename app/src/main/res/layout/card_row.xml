@@ -91,6 +91,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:ellipsize="end"
+                    android:paddingRight="3dp"
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
                     android:gravity="start" />

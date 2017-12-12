@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Pagination</string>
+    <string name="app_name">MovieDB</string>
     <string name="rating_string">User Score</string>
 </resources>

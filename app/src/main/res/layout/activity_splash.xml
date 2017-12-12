@@ -8,17 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:background="@drawable/ic_splash_logo"
+        android:background="@drawable/splash"
         android:foregroundGravity="center" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+    <ProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:text="Movie Time"
-        android:textColor="@color/splash"
-        android:textSize="50dp"
-        android:textStyle="bold" />
+        android:id="@+id/progressBar" />
+
 </RelativeLayout>

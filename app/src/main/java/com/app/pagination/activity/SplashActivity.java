@@ -35,7 +35,7 @@ import java.util.Set;
  */
 public class SplashActivity extends AppCompatActivity {
     List genreList = new ArrayList<>();
-    int statusCode;
+    int statusCode = 0;
     Context context;
 
     @Override
@@ -43,17 +43,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         context = getApplicationContext();
-        new GetMovieGenresData().execute();
-        /*int SPLASH_TIME = 1500;
+        int SPLASH_TIME = 1500;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                    Intent intentLaunchLoginActivity = new Intent(
+                    /*Intent intentLaunchLoginActivity = new Intent(
                             SplashActivity.this, MainActivity.class);
                     startActivity(intentLaunchLoginActivity);
-                    finish();
+                    finish();*/
+                new GetMovieGenresData().execute();
             }
-        }, SPLASH_TIME);*/
+        }, SPLASH_TIME);
     }
 
     public class GetMovieGenresData extends AsyncTask<Void, Void, Integer> {
@@ -99,13 +99,6 @@ public class SplashActivity extends AppCompatActivity {
                         context, MainActivity.class);
                 intentLaunchLoginActivity.putExtra("GENRES_JSON_OBJECT", genreJSONObject);
                 startActivity(intentLaunchLoginActivity);
-       /*      int SPLASH_TIME = 1500;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                    finish();
-            }
-        }, SPLASH_TIME);*/
                 finish();
             } else {
                 Toast.makeText(context, "Check Your Network Connection", Toast.LENGTH_SHORT).show();
